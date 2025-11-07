@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import ProductCard from "@/components/products/product-card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import ProductCard from "@/components/products/product-card"
 import { Search, Sliders } from "lucide-react"
+import { useEffect, useState } from "react"
 
 interface Product {
   id: string
@@ -35,7 +35,7 @@ export default function ProductsPage() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("/api/products")
+      const response = await fetch("/api/new_products")
       const data = await response.json()
       setProducts(data)
       setFilteredProducts(data)
@@ -144,15 +144,18 @@ export default function ProductsPage() {
 
               {/* Price Range */}
               <div>
-                <label className="block text-sm font-medium text-foreground mb-3">Price Range</label>
+                <label htmlFor="price-range" className="block text-sm font-medium text-foreground mb-3">Price Range</label>
                 <div className="space-y-2">
                   <input
+                    id="price-range"
                     type="range"
                     min="0"
                     max="5000"
                     value={priceRange[1]}
                     onChange={(e) => setPriceRange([priceRange[0], Number.parseInt(e.target.value)])}
                     className="w-full"
+                    title="Maximum price"
+                    aria-label="Maximum price"
                   />
                   <p className="text-sm text-muted-foreground">
                     ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}

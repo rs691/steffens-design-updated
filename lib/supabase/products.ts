@@ -17,7 +17,7 @@ export interface Product {
 export async function getProducts(): Promise<Product[]> {
   const supabase = getSupabaseServer()
 
-  const { data, error } = await supabase.from("products").select("*").order("created_at", { ascending: false })
+  const { data, error } = await supabase.from("new_products").select("*").order("created_at", { ascending: false })
 
   if (error) {
     console.error("Error fetching products:", error)
@@ -30,7 +30,7 @@ export async function getProducts(): Promise<Product[]> {
 export async function getProductById(id: string): Promise<Product | null> {
   const supabase = getSupabaseServer()
 
-  const { data, error } = await supabase.from("products").select("*").eq("id", id).single()
+  const { data, error } = await supabase.from("new_products").select("*").eq("id", id).single()
 
   if (error) {
     console.error("Error fetching product:", error)
@@ -44,7 +44,7 @@ export async function getProductsByCategory(category: string): Promise<Product[]
   const supabase = getSupabaseServer()
 
   const { data, error } = await supabase
-    .from("products")
+    .from("new_products")
     .select("*")
     .eq("category", category)
     .order("created_at", { ascending: false })
